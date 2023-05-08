@@ -1,6 +1,8 @@
-容量管理和动态阈值报警可视化界面
+## 项目介绍
 
-## 项目成员：
+本项目是一个用于容量管理和动态阈值报警的可视化界面(Capacity management and dynamic threshold alarm visualization interface)。经过处理后的数据集请见server中的final_data。
+
+## 项目成员
 * 王麒翔
 * 孙亚萱
 * 董赛天
