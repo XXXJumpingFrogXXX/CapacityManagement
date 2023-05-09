@@ -21,7 +21,7 @@ export default {
     },
     height: {
       type: String,
-      default: '350px'
+      default: '500px'
     },
     autoResize: {
       type: Boolean,
@@ -136,9 +136,9 @@ export default {
           name: 'expected',
           itemStyle: {
             normal: {
-              color: '#00D300',
+              color: '#FF9000',
               lineStyle: {
-                color: '#00D300',
+                color: '#FF9000',
                 width: 1
               },
               areaStyle: {
@@ -146,7 +146,7 @@ export default {
               }
             }
           },
-          smooth: true,
+          // smooth: true,
           type: 'line',
           data: expectedData,
           animationDuration: 2800,
@@ -160,7 +160,7 @@ export default {
           symbolSize: 2,
           itemStyle: {
             normal: {
-              color:'#B8DEFF',
+              color:'#006CD4',
             }
           },
           emphasis: {

@@ -5,7 +5,7 @@
       <div class="title-select">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
-            <span class="user-avatar">集群 {{ fileIndex }}</span>
+            <span class="user-avatar"> {{ this.files[fileIndex] }}</span>
             <i class="el-icon-caret-bottom"></i>
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -44,12 +44,11 @@ export default {
   components: {
     PanelGroup,
     LineChart,
-    AlarmTable
   },
   data() {
     return {
       fileIndex: 1,
-      files: ['集群1', '集群2', '集群3'],
+      files: ['test-aiops-hbase-203', 'test-bpfp-bs-engine2-ft', 'test-rr_offline_qf_cluster'],
       lineChartData: lineChartData.allData,
       anomalyData:[]
     }
@@ -71,9 +70,6 @@ export default {
         console.log('正在获取目标数据...'),
         lineChartData.allData.expectedData=res.data.all_data.predict,
         lineChartData.allData.actualData=res.data.all_data.raw_data,
-        lineChartData.allData.expectedLowerData=res.data.all_data.predict_lower,
-        lineChartData.allData.expectedUpperData=res.data.all_data.predict_upper,
-        lineChartData.allData.actualStatus=res.data.all_data.status,
         lineChartData.allData.expectedDataXAxis=res.data.all_data.date,
         console.log('all_data获取成功...')
       }).catch(error => {
@@ -88,9 +84,6 @@ export default {
         console.log('正在获取目标数据...'),
         lineChartData.allData.expectedData=res.data.all_data.predict,
         lineChartData.allData.actualData=res.data.all_data.raw_data,
-        lineChartData.allData.expectedLowerData=res.data.all_data.predict_lower,
-        lineChartData.allData.expectedUpperData=res.data.all_data.predict_upper,
-        lineChartData.allData.ActualStatus=res.data.all_data.status,
         lineChartData.allData.expectedDataXAxis=res.data.all_data.date,
         console.log('all_data获取成功...'),
         this.anomalyData=res.data.outliner,
@@ -187,7 +180,6 @@ export default {
 .el-dropdown-menu {
   max-height: 200px;
   /* 设置最大高度 */
-  overflow-y: scroll;
-  /* 显示垂直滚动条 */
+  max-width: 200px;
 }
 </style>

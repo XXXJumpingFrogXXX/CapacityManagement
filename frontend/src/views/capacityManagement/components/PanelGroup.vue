@@ -69,12 +69,12 @@ export default {
   margin-top: 18px;
 
   .card-panel-col {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
 
   .card-panel {
 
-    height: 108px;
+    height: 60px;
     cursor: pointer;
     font-size: 12px;
     position: relative;
@@ -85,57 +85,64 @@ export default {
     border-color: rgba(0, 0, 0, .05);
 
     &:hover {
-      background: #666;
-      .card-panel-text {
-        color: #fff;
+      background:rgba(0, 0, 0, .3);
+
+
+      .icon-day {
+        color: #40c9c6;
+      }
+
+      .icon-week {
+        color: #36a3f7;
+      }
+
+      .icon-month {
+        color: #f4516c;
+      }
+
+      .icon-year {
+        color: #cc17c6
+      }
+
+      .card-panel-icon-wrapper {
+        float: left;
+        margin: 14px 0 0 14px;
+        padding: 16px;
+        transition: all 0.38s ease-out;
+        border-radius: 6px;
+      }
+
+      .card-panel-icon {
+        float: left;
+        font-size: 48px;
+      }
+
+      .card-panel-description {
+        float: right;
+        font-weight: bold;
+        margin: auto;
+        // margin-left: 10px;
+
+        .card-panel-text {
+          line-height: 60px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: rgb(255, 255, 255);
+          font-size: 25px;
+        }
       }
     }
-
-    .icon-day {
-      color: #40c9c6;
-    }
-
-    .icon-week {
-      color: #36a3f7;
-    }
-
-    .icon-month {
-      color: #f4516c;
-    }
-
-    .icon-year {
-      color: #cc17c6
-    }
-
-    .card-panel-icon-wrapper {
-      float: left;
-      margin: 14px 0 0 14px;
-      padding: 16px;
-      transition: all 0.38s ease-out;
-      border-radius: 6px;
-    }
-
-    .card-panel-icon {
-      float: left;
-      font-size: 48px;
-    }
-
-    .card-panel-description {
-      float: right;
-      font-weight: bold;
-      margin: auto;
-      // margin-left: 10px;
-
-      .card-panel-text {
-        line-height: 60px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: rgba(0, 0, 0, 0.45);
-        font-size: 25px;
-      }
-    }
+    .card-panel-text {
+          line-height: 60px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: rgba(0, 0, 0, 0.45);
+          font-size: 25px;
+        }
   }
 }
 

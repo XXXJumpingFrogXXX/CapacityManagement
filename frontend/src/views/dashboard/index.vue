@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
     <div class="title">
-      <span class="title-head">容量预测</span>
+      <span class="title-head">动态阈值告警</span>
       <div class="title-select">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
@@ -200,5 +200,8 @@ export default {
   /* 设置最大高度 */
   overflow-y: scroll;
   /* 显示垂直滚动条 */
+  max-width: 200px;
+  width: 120px;
 }
+
 </style>
