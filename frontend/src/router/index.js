@@ -28,11 +28,17 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    meta: { title: '仪表盘', icon: 'dashboard' },
     children: [{
+      path: 'capacityManagement',
+      name: 'CapacityManagement',
+      component: () => import('@/views/capacityManagement/index'),
+      meta: { title: '容量管理' }
+    },{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '仪表盘', icon: 'dashboard' }
+      meta: { title: '动态阈值告警' }
     }]
   },
 
