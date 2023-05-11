@@ -3,7 +3,7 @@ from flask_cors import CORS
 import pandas as pd
 
 # 需要返回六个数组：
-#     实际值\\
+#     实际值
 #     预测上限
 #     预测下限
 #     日期
@@ -23,9 +23,16 @@ app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 point_end = 10801
-periods = {"futureDay": 30 * 24, "futureWeek": 30 * 24 * 7, "futureHalfMonth": 30 * 24 * 15, "futureMonth": 30 * 24 * 30}
+periods = {"futureDay": 30 * 24, "futureWeek": 30 * 24 * 7, "futureMonth": 30 * 24 * 30,
+           "futureSixMonths": 30 * 24 * 30 * 6}
 num = 6
 time = "futureDay"
+
+sheets = ["test-aiops-hbase-203", "test-bpfp-bs-engine2-ft", "test-rr_offline_qf_cluster"]
+sheet_num = 0
+sheet_time = "futureWeek"
+sheet_periods = {"futureDay": 1, "futureWeek": 7, "futureMonth": 30,
+                 "futureHalfMonths": 15}
 
 
 def getpath(num):
@@ -53,7 +60,7 @@ def get_outliner():
     result_path = getpath(num)
     error_path = result_path.replace("result", "outliner")
     outliners = pd.read_csv(error_path)[:point_end]
-    outliners["id"] = range(1, len(outliners)+1)
+    outliners["id"] = range(1, len(outliners) + 1)
     json_list = []
     cols = ["id", "ds", "raw_data", "status"]
     for row in outliners.itertuples():
@@ -77,6 +84,26 @@ def fetchByTime():
     return dic
 
 
+def fetchByNum():
+    data_path = r"data-3.1\{}.csv".format(sheets[sheet_num])
+    data = pd.read_csv(data_path)
+    count = len(data["actual"].dropna())
+    data = data[:count]
+    date, predict, actual = data["ds"], data["predict"], data["actual"].dropna()
+    dic = {"date": date.tolist(), "predict": predict.tolist(), "actual": actual.tolist()}
+    return dic
+
+
+def fetchByPeriod():
+    data_path = r"data-3.1\{}.csv".format(sheets[sheet_num])
+    data = pd.read_csv(data_path)
+    count = len(data["actual"].dropna())
+    data = data[:(count + sheet_periods[sheet_time])]
+    date, predict, actual = data["ds"], data["predict"], data["actual"].dropna()
+    dic = {"date": date.tolist(), "predict": predict.tolist(), "actual": actual.tolist()}
+    return dic
+
+
 # sanity check route
 @app.route('/data', methods=['GET', 'POST'])
 def data():
@@ -96,13 +123,43 @@ def data():
 @app.route("/period", methods=["POST", "GET"])
 def period():
     response = {}
-    global time
+    global sheet_num
     if request.method == "GET":
         response['all_data'] = fetchByTime()
     elif request.method == "POST":
         post_data = request.get_json()
         time = post_data.get("time")
         response["all_data"] = fetchByTime()
+    return jsonify(response)
+
+
+@app.route("/predict", methods=["POST", "GET"])
+def predict():
+    response = {}
+    global sheet_num
+    if request.method == "GET":
+        response['all_data'] = fetchByNum()
+        response["name"] = sheets[sheet_num]
+    elif request.method == "POST":
+        post_data = request.get_json()
+        sheet_num = post_data.get("sheet_num")
+        response["all_data"] = fetchByNum()
+        response["name"] = sheets[sheet_num]
+    return jsonify(response)
+
+
+@app.route("/sheet_period", methods=["POST", "GET"])
+def sheet_period():
+    response = {}
+    global sheet_time
+    if request.method == "GET":
+        response['all_data'] = fetchByPeriod()
+        response["name"] = sheets[sheet_num]
+    elif request.method == "POST":
+        post_data = request.get_json()
+        sheet_time = post_data.get("sheet_time")
+        response["all_data"] = fetchByPeriod()
+        response["name"] = sheets[sheet_num]
     return jsonify(response)
 
 
