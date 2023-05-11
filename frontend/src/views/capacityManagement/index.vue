@@ -9,7 +9,7 @@
             <i class="el-icon-caret-bottom"></i>
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
-            <el-dropdown-item v-for="(filename, index) in this.files" :key="index" @click.native="switchFile(index+1)">{{
+            <el-dropdown-item v-for="(filename, index) in this.files" :key="index" @click.native="switchFile(index)">{{
               filename }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      fileIndex: 1,
+      fileIndex: 0,
       files: ['test-aiops-hbase-203', 'test-bpfp-bs-engine2-ft', 'test-rr_offline_qf_cluster'],
       lineChartData: lineChartData.allData,
       anomalyData:[]
@@ -60,16 +60,16 @@ export default {
   },
   methods: {
     initData(){
-      this.switchFile(1)
+      this.switchFile(0)
       this.handleSetLineChartData('futureDay')
       this.lineChartData = lineChartData.allData
       console.log(this.lineChartData)
     },
     handleSetLineChartData(type) {
-      axios.post(`http://localhost:5000/period`, { time: type }).then(res => {
+      axios.post(`http://localhost:5000/sheet_period`, { sheet_time: type }).then(res => {
         console.log('正在获取目标数据...'),
         lineChartData.allData.expectedData=res.data.all_data.predict,
-        lineChartData.allData.actualData=res.data.all_data.raw_data,
+        lineChartData.allData.actualData=res.data.all_data.actual,
         lineChartData.allData.expectedDataXAxis=res.data.all_data.date,
         console.log('all_data获取成功...')
       }).catch(error => {
@@ -80,13 +80,12 @@ export default {
     switchFile(index) {
       this.fileIndex = index;
       console.log('点击了集群 ' + this.fileIndex + ' 的文件');
-      axios.post(`http://localhost:5000/data`, { num: index }).then(res => {
+      axios.post(`http://localhost:5000/predict`, { sheet_num: index }).then(res => {
         console.log('正在获取目标数据...'),
         lineChartData.allData.expectedData=res.data.all_data.predict,
-        lineChartData.allData.actualData=res.data.all_data.raw_data,
+        lineChartData.allData.actualData=res.data.all_data.actual,
         lineChartData.allData.expectedDataXAxis=res.data.all_data.date,
         console.log('all_data获取成功...'),
-        this.anomalyData=res.data.outliner,
         console.log('anomaly获取成功...')
       }).catch(error => {
         if (error.response.status === 400)

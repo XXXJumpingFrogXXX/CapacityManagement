@@ -155,7 +155,7 @@ export default {
         {
           name: 'actual',
           smooth: false,
-          type: 'scatter',
+          type: 'line',
           symbol: 'circle',
           symbolSize: 2,
           itemStyle: {
