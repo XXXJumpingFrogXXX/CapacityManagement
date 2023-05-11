@@ -1,7 +1,8 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureDay')">
+      <div class="card-panel" @click="handleSetLineChartData('futureDay')"
+        :class="{ active: activeButton === 'futureDay' }">
         <div class="card-panel-icon-wrapper icon-day">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -13,7 +14,8 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureWeek')">
+      <div class="card-panel" @click="handleSetLineChartData('futureWeek')"
+        :class="{ active: activeButton === 'futureWeek' }">
         <div class="card-panel-icon-wrapper icon-week">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -25,7 +27,8 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureHalfMonth')">
+      <div class="card-panel" @click="handleSetLineChartData('futureHalfMonth')"
+        :class="{ active: activeButton === 'futureHalfMonth' }">
         <div class="card-panel-icon-wrapper icon-month">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -37,7 +40,8 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureMonth')">
+      <div class="card-panel" @click="handleSetLineChartData('futureMonth')"
+        :class="{ active: activeButton === 'futureMonth' }">
         <div class="card-panel-icon-wrapper icon-year">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -56,8 +60,15 @@
 export default {
   components: {
   },
+  data() {
+    return {
+      activeButton: 'futureDay',
+      // other data
+    }
+  },
   methods: {
     handleSetLineChartData(type) {
+      this.activeButton = type;
       this.$emit('handleSetLineChartData', type)
     }
   }
@@ -151,6 +162,28 @@ export default {
   }
 }
 
+.card-panel.active {
+  .card-panel-icon-wrapper {
+    color: #fff;
+  }
+
+  .icon-day {
+    background: #40c9c6;
+  }
+
+  .icon-week {
+    background: #36a3f7;
+  }
+
+  .icon-month {
+    background: #f4516c;
+  }
+
+  .icon-year {
+    background: #cc17c6
+  }
+}
+
 @media (max-width:550px) {
   .card-panel-description {
     display: none;
@@ -169,11 +202,10 @@ export default {
     }
 
     .card-panel {
-    height: auto; // 修改这一行
-    display: flex; // 添加这一行
-    justify-content: center; // 添加这一行
-    align-items: center; // 添加这一行
+      height: auto; // 修改这一行
+      display: flex; // 添加这一行
+      justify-content: center; // 添加这一行
+      align-items: center; // 添加这一行
     }
   }
-}
-</style>
+}</style>

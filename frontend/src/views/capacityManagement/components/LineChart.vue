@@ -141,9 +141,6 @@ export default {
                 color: '#FF9000',
                 width: 1
               },
-              areaStyle: {
-                color: '#FFFFFF'
-              }
             }
           },
           // smooth: true,

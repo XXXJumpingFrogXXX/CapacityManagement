@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureDay')">
+      <div class="card-panel" @click="handleSetLineChartData('futureDay')"  :class="{ active: activeButton === 'futureDay' }">
         <!-- <div class="card-panel-icon-wrapper icon-day">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div> -->
@@ -13,7 +13,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureWeek')">
+      <div class="card-panel" @click="handleSetLineChartData('futureWeek')"  :class="{ active: activeButton === 'futureWeek' }">
         <!-- <div class="card-panel-icon-wrapper icon-week">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div> -->
@@ -25,7 +25,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureHalfMonth')">
+      <div class="card-panel" @click="handleSetLineChartData('futureHalfMonth')"  :class="{ active: activeButton === 'futureHalfMonth' }">
         <!-- <div class="card-panel-icon-wrapper icon-month">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div> -->
@@ -37,7 +37,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureMonth')">
+      <div class="card-panel" @click="handleSetLineChartData('futureMonth')"  :class="{ active: activeButton === 'futureMonth' }">
         <!-- <div class="card-panel-icon-wrapper icon-year">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div> -->
@@ -56,8 +56,15 @@
 export default {
   components: {
   },
+  data() {
+    return {
+      activeButton: 'futureDay',
+      // other data
+    }
+  },
   methods: {
     handleSetLineChartData(type) {
+      this.activeButton = type;
       this.$emit('handleSetLineChartData', type)
     }
   }
@@ -82,46 +89,28 @@ export default {
     color: #666;
     background: #fff;
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
-    border-color: rgba(0, 0, 0, .05);
-
+    border-color: rgba(130, 9, 9, 0.05);
+    font-weight: bold;
+    
+    .card-panel-text {
+      line-height: 60px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      // color: rgba(0, 0, 0, 0.45);
+      font-size: 25px;
+    }
     &:hover {
-      background:rgba(0, 0, 0, .3);
-
-
-      .icon-day {
-        color: #40c9c6;
-      }
-
-      .icon-week {
-        color: #36a3f7;
-      }
-
-      .icon-month {
-        color: #f4516c;
-      }
-
-      .icon-year {
-        color: #cc17c6
-      }
-
-      .card-panel-icon-wrapper {
-        float: left;
-        margin: 14px 0 0 14px;
-        padding: 16px;
-        transition: all 0.38s ease-out;
-        border-radius: 6px;
-      }
-
-      .card-panel-icon {
-        float: left;
-        font-size: 48px;
-      }
+      background: rgba(0, 0, 0, .3);
 
       .card-panel-description {
         float: right;
         font-weight: bold;
         margin: auto;
+
         // margin-left: 10px;
+
 
         .card-panel-text {
           line-height: 60px;
@@ -134,16 +123,20 @@ export default {
         }
       }
     }
-    .card-panel-text {
-          line-height: 60px;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: rgba(0, 0, 0, 0.45);
-          font-size: 25px;
-        }
+
+    // &:active {
+    //   background: aqua;
+
+    //   .card-panel-text {
+    //     color: rgb(185, 35, 35);
+    //   }
+    // }
+
   }
+}
+.card-panel.active {
+  background-color: #3f4e5e;
+  color: #fff;
 }
 
 @media (max-width:550px) {
@@ -170,5 +163,4 @@ export default {
       align-items: center; // 添加这一行
     }
   }
-}
-</style>
+}</style>
