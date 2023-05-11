@@ -4,7 +4,6 @@
 
       <div class="title-container">
         <img src="../../assets/nankai_images/logo.png" style="display: flex; justify-content: center; align-items: center;"/>
-        <hr>
         <h3 class="title"> 登录界面</h3>
       </div>
 
@@ -129,7 +128,6 @@ export default {
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
 $light_gray:#fff;
@@ -185,6 +183,21 @@ $light_gray:#eee;
   background-color: $bg;
   overflow: hidden;
 
+  .title-container {
+    position: relative;
+    .img{
+      margin: 0 500px 40px auto;
+
+    }
+    .title {
+      font-size: 40px;
+      color: $light_gray;
+      margin: 30px auto 40px auto;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
   .login-form {
     position: relative;
     width: 520px;
@@ -192,10 +205,19 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+
+    .el-form-item {
+      font-size: 25px;
+    }
+
+    .el-input {
+      font-size: 25px;
+    }
+
   }
 
   .tips {
-    font-size: 14px;
+    font-size: 25px;
     color: #fff;
     margin-bottom: 10px;
 
@@ -214,23 +236,11 @@ $light_gray:#eee;
     display: inline-block;
   }
 
-  .title-container {
-    position: relative;
-
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-  }
-
   .show-pwd {
     position: absolute;
     right: 10px;
     top: 7px;
-    font-size: 16px;
+    font-size: 25px;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
