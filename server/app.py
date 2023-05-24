@@ -35,6 +35,7 @@ sheet_periods = {"futureDay": 1, "futureWeek": 7, "futureMonth": 30,
                  "futureHalfMonths": 15}
 
 
+# excel文件路径
 def getpath(num):
     if num in range(1, 10):
         path = "0" + str(num)
@@ -44,6 +45,7 @@ def getpath(num):
     return result_path
 
 
+# csv文件转为json
 def csv2json():
     result_path = getpath(num)
     result = pd.read_csv(result_path)[:point_end]
@@ -56,6 +58,7 @@ def csv2json():
     return dic
 
 
+# 得到csv文件中的异常值
 def get_outliner():
     result_path = getpath(num)
     error_path = result_path.replace("result", "outliner")
@@ -72,6 +75,7 @@ def get_outliner():
     return json_list
 
 
+# 通过不同的预测时间步长返回不同的预测数据
 def fetchByTime():
     result_path = getpath(num)
     result = pd.read_csv(result_path)[:(point_end + periods[time])]
@@ -84,6 +88,7 @@ def fetchByTime():
     return dic
 
 
+# 通过改变文件索引，返回不同的预测数据
 def fetchByNum():
     data_path = r"data-3.1\{}.csv".format(sheets[sheet_num])
     data = pd.read_csv(data_path)
@@ -94,6 +99,7 @@ def fetchByNum():
     return dic
 
 
+# 通过改变预测步长，返回不同的预测数据
 def fetchByPeriod():
     data_path = r"data-3.1\{}.csv".format(sheets[sheet_num])
     data = pd.read_csv(data_path)
@@ -104,7 +110,7 @@ def fetchByPeriod():
     return dic
 
 
-# sanity check route
+# 3.2-文件索引
 @app.route('/data', methods=['GET', 'POST'])
 def data():
     response = {}
@@ -120,19 +126,21 @@ def data():
     return jsonify(response)
 
 
+# 3.2-时间步长
 @app.route("/period", methods=["POST", "GET"])
 def period():
     response = {}
-    global sheet_num
+    global sheet_time
     if request.method == "GET":
         response['all_data'] = fetchByTime()
     elif request.method == "POST":
         post_data = request.get_json()
-        time = post_data.get("time")
+        sheet_time = post_data.get("sheet_time")
         response["all_data"] = fetchByTime()
     return jsonify(response)
 
 
+# 3.1-文件索引
 @app.route("/predict", methods=["POST", "GET"])
 def predict():
     response = {}
@@ -148,6 +156,7 @@ def predict():
     return jsonify(response)
 
 
+# 3.1-时间步长
 @app.route("/sheet_period", methods=["POST", "GET"])
 def sheet_period():
     response = {}
