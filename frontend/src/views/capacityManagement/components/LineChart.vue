@@ -1,6 +1,5 @@
 <template>
-  <div :class="className" :style="{ height: height, width: width }">
-  </div>
+  <div :class="className" :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -69,9 +68,9 @@ export default {
           start: 0,
           end: 100
         }
-      });
+      })
     },
-    setOptions({ expectedData, actualData,expectedDataXAxis } = {}) {
+    setOptions({ expectedData, actualData, expectedDataXAxis } = {}) {
       this.chart.setOption({
         xAxis: {
           data: expectedDataXAxis,
@@ -130,8 +129,7 @@ export default {
             start: 0,
             end: 100,
             filterMode: 'empty'
-          }]
-        ,
+          }],
         series: [{
           name: 'expected',
           itemStyle: {
@@ -140,7 +138,7 @@ export default {
               lineStyle: {
                 color: '#FF9000',
                 width: 1
-              },
+              }
             }
           },
           // smooth: true,
@@ -157,7 +155,7 @@ export default {
           symbolSize: 2,
           itemStyle: {
             normal: {
-              color:'#006CD4',
+              color: '#006CD4'
             }
           },
           emphasis: {
@@ -169,7 +167,7 @@ export default {
           data: actualData,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
-        },
+        }
         ]
       })
     }

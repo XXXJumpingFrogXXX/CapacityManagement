@@ -34,7 +34,7 @@ export const constantRoutes = [
       name: 'CapacityManagement',
       component: () => import('@/views/capacityManagement/index'),
       meta: { title: '容量管理' }
-    },{
+    }, {
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
@@ -47,13 +47,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/aboutUs',
     children: [{
-        path: 'aboutUs',
-        name: 'AboutUs',
-        component: () => import('@/views/aboutUs/index'),
-        meta: { title: '关于我们', icon: 'message' }
-      }]
+      path: 'aboutUs',
+      name: 'AboutUs',
+      component: () => import('@/views/aboutUs/index'),
+      meta: { title: '关于我们', icon: 'message' }
+    }]
   },
-  
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

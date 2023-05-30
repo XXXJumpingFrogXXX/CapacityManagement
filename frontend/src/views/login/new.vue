@@ -2,37 +2,37 @@
   <div class="login-container">
     <div class="screen">
       <div class="screen__content">
-        <el-form class="login" ref="loginForm" :model="loginForm" :rules="loginRules" auto-complete="on" label-position="left">
+        <el-form ref="loginForm" class="login" :model="loginForm" :rules="loginRules" auto-complete="on" label-position="left">
           <div class="title-container">
             <h3 class="title"> 登录界面</h3>
           </div>
           <el-form-item prop="username">
             <div class="login__field">
-              <i class="login__icon fas fa-user"></i>
+              <i class="login__icon fas fa-user" />
               <span class="svg-container">
                 <svg-icon icon-class="user" />
               </span>
-              <input ref="username" name="username" v-model="loginForm.username" type="text" class="login__input" auto-complete="on" placeholder="User Name" tabindex="1">
+              <input ref="username" v-model="loginForm.username" name="username" type="text" class="login__input" auto-complete="on" placeholder="User Name" tabindex="1">
             </div>
           </el-form-item>
 
           <el-form-item prop="password">
             <div class="login__field">
-              <i class="login__icon fas fa-lock"></i>
+              <i class="login__icon fas fa-lock" />
               <span class="svg-container">
                 <svg-icon icon-class="password" />
               </span>
-              <input :key="passwordType" ref="password" name="password" v-model="loginForm.password" :type="passwordType" class="login__input" auto-complete="on" placeholder="Password" tabindex="2" @keyup.enter.native="handleLogin">
+              <input :key="passwordType" ref="password" v-model="loginForm.password" name="password" :type="passwordType" class="login__input" auto-complete="on" placeholder="Password" tabindex="2" @keyup.enter.native="handleLogin">
               <span class="show-pwd" @click="showPwd">
                 <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
               </span>
             </div>
           </el-form-item>
-          
+
           <button class="button login__submit" @click.native.prevent="handleLogin">
             <span class="button__text">登录</span>
-            <i class="button__icon fas fa-chevron-right"></i>
-          </button>  
+            <i class="button__icon fas fa-chevron-right" />
+          </button>
         </el-form>
 
         <div class="tips">
@@ -41,87 +41,87 @@
         </div>
       </div>
       <div class="screen__background">
-        <span class="screen__background__shape screen__background__shape4"></span>
-        <span class="screen__background__shape screen__background__shape3"></span>    
-        <span class="screen__background__shape screen__background__shape2"></span>
-        <span class="screen__background__shape screen__background__shape1"></span>
-      </div>    
+        <span class="screen__background__shape screen__background__shape4" />
+        <span class="screen__background__shape screen__background__shape3" />
+        <span class="screen__background__shape screen__background__shape2" />
+        <span class="screen__background__shape screen__background__shape1" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { validUsername } from '@/utils/validate'
+import { validUsername } from '@/utils/validate'
 
-  export default {
-    name: 'Login',
-    data() {
-      const validateUsername = (rule, value, callback) => {
-        if (!validUsername(value)) {
-          callback(new Error('Please enter the correct user name'))
-        } else {
-          callback()
-        }
-      }
-      const validatePassword = (rule, value, callback) => {
-        if (value.length < 6) {
-          callback(new Error('The password can not be less than 6 digits'))
-        } else {
-          callback()
-        }
-      }
-      return {
-        loginForm: {
-          username: 'admin',
-          password: '111111'
-        },
-        loginRules: {
-          username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-          password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-        },
-        loading: false,
-        passwordType: 'password',
-        redirect: undefined
-      }
-    },
-    watch: {
-      $route: {
-        handler: function(route) {
-          this.redirect = route.query && route.query.redirect
-        },
-        immediate: true
-      }
-    },
-    methods: {
-      showPwd() {
-        if (this.passwordType === 'password') {
-          this.passwordType = ''
-        } else {
-          this.passwordType = 'password'
-        }
-        this.$nextTick(() => {
-          this.$refs.password.focus()
-        })
-      },
-      handleLogin() {
-        console.log(this.loginForm),
-        this.$refs.loginForm.validate(valid => {
-          if (valid) {
-            this.loading = true
-            this.$store.dispatch('user/login', this.loginForm).then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            }).catch(() => {
-              this.loading = false
-            })
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
+export default {
+  name: 'Login',
+  data() {
+    const validateUsername = (rule, value, callback) => {
+      if (!validUsername(value)) {
+        callback(new Error('Please enter the correct user name'))
+      } else {
+        callback()
       }
     }
+    const validatePassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('The password can not be less than 6 digits'))
+      } else {
+        callback()
+      }
+    }
+    return {
+      loginForm: {
+        username: 'admin',
+        password: '111111'
+      },
+      loginRules: {
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+      },
+      loading: false,
+      passwordType: 'password',
+      redirect: undefined
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        this.redirect = route.query && route.query.redirect
+      },
+      immediate: true
+    }
+  },
+  methods: {
+    showPwd() {
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
+      } else {
+        this.passwordType = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.password.focus()
+      })
+    },
+    handleLogin() {
+      console.log(this.loginForm),
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
   }
+}
 </script>
 
 <style>
@@ -130,12 +130,12 @@
   * {
     box-sizing: border-box;
     margin: 0;
-    padding: 0; 
+    padding: 0;
     font-family: Raleway, sans-serif;
   }
 
   body {
-    background: linear-gradient(90deg, #C7C5F4, #776BCC);   
+    background: linear-gradient(90deg, #C7C5F4, #776BCC);
   }
 
   .login-container {
@@ -145,21 +145,21 @@
     min-height: 100vh;
   }
 
-  .screen {   
-    background: linear-gradient(90deg, #5D54A4, #7C78B8);   
-    position: relative; 
+  .screen {
+    background: linear-gradient(90deg, #5D54A4, #7C78B8);
+    position: relative;
     height: 600px;
-    width: 360px; 
+    width: 360px;
     box-shadow: 0px 0px 24px #5C5696;
   }
 
   .screen__content {
     z-index: 1;
-    position: relative; 
+    position: relative;
     height: 100%;
   }
 
-  .screen__background {   
+  .screen__background {
     position: absolute;
     top: 0;
     left: 0;
@@ -167,7 +167,7 @@
     bottom: 0;
     z-index: 0;
     -webkit-clip-path: inset(0 0 0 0);
-    clip-path: inset(0 0 0 0);  
+    clip-path: inset(0 0 0 0);
   }
 
   .screen__background__shape {
@@ -178,18 +178,18 @@
   .screen__background__shape1 {
     height: 520px;
     width: 520px;
-    background: #FFF; 
+    background: #FFF;
     top: -50px;
-    right: 120px; 
+    right: 120px;
     border-radius: 0 72px 0 0;
   }
 
   .screen__background__shape2 {
     height: 220px;
     width: 220px;
-    background: #6C63AC;  
+    background: #6C63AC;
     top: -172px;
-    right: 0; 
+    right: 0;
     border-radius: 32px;
   }
 
@@ -198,16 +198,16 @@
     width: 190px;
     background: linear-gradient(270deg, #5D54A4, #6A679E);
     top: -24px;
-    right: 0; 
+    right: 0;
     border-radius: 32px;
   }
 
   .screen__background__shape4 {
     height: 400px;
     width: 200px;
-    background: #7E7BB9;  
+    background: #7E7BB9;
     top: 420px;
-    right: 50px;  
+    right: 50px;
     border-radius: 60px;
   }
 
@@ -218,8 +218,8 @@
   }
 
   .login__field {
-    padding: 20px 0px;  
-    position: relative; 
+    padding: 20px 0px;
+    position: relative;
   }
 
   .login__icon {
@@ -277,7 +277,7 @@
     color: #7875B5;
   }
 
-  .social-login { 
+  .social-login {
     position: absolute;
     height: 140px;
     width: 160px;
@@ -296,12 +296,12 @@
   .social-login__icon {
     padding: 20px 10px;
     color: #fff;
-    text-decoration: none;  
+    text-decoration: none;
     text-shadow: 0px 0px 8px #7875B5;
   }
 
   .social-login__icon:hover {
-    transform: scale(1.5);  
+    transform: scale(1.5);
   }
-  
+
 </style>

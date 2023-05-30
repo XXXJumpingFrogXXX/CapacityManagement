@@ -3,38 +3,41 @@
     <div class="title">
       <span class="title-head">容量预测</span>
       <div class="title-select">
+        <!-- 文件索引选择下拉框 -->
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <span class="user-avatar"> {{ this.files[fileIndex] }}</span>
-            <i class="el-icon-caret-bottom"></i>
+            <i class="el-icon-caret-bottom" />
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
-            <el-dropdown-item v-for="(filename, index) in this.files" :key="index" @click.native="switchFile(index)">{{
-              filename }}</el-dropdown-item>
+            <el-dropdown-item v-for="(filename, index) in this.files" :key="index" @click.native="switchFile(index)">
+              {{ filename }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
     </div>
     <el-row class="chart-container">
+      <!-- 使用 LineChart 组件显示图表 -->
       <line-chart :chart-data="lineChartData" />
     </el-row>
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
-    
   </div>
 </template>
 
+
 <script>
-import axios from "axios";
+import axios from 'axios'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
 
 const lineChartData = {
-  allData:{
+  allData: {
     expectedData: [],
     actualData: [],
     expectedDataXAxis: []
   },
-  anomalyData:[
+  anomalyData: [
 
   ]
 }
@@ -43,54 +46,54 @@ export default {
   name: 'DashboardAdmin',
   components: {
     PanelGroup,
-    LineChart,
+    LineChart
   },
   data() {
     return {
       fileIndex: 0,
       files: ['test-aiops-hbase-203', 'test-bpfp-bs-engine2-ft', 'test-rr_offline_qf_cluster'],
       lineChartData: lineChartData.allData,
-      anomalyData:[]
+      anomalyData: []
     }
   },
-  mounted(){
+  mounted() {
     this.$nextTick(() => {
       this.initData()
     })
   },
   methods: {
-    initData(){
+    initData() {
       this.switchFile(0)
       this.handleSetLineChartData('futureDay')
       this.lineChartData = lineChartData.allData
       console.log(this.lineChartData)
     },
     handleSetLineChartData(type) {
+      //向后端发送需要的预测时间步长-3.1
       axios.post(`http://localhost:5000/sheet_period`, { sheet_time: type }).then(res => {
         console.log('正在获取目标数据...'),
-        lineChartData.allData.expectedData=res.data.all_data.predict,
-        lineChartData.allData.actualData=res.data.all_data.actual,
-        lineChartData.allData.expectedDataXAxis=res.data.all_data.date,
+        lineChartData.allData.expectedData = res.data.all_data.predict,
+        lineChartData.allData.actualData = res.data.all_data.actual,
+        lineChartData.allData.expectedDataXAxis = res.data.all_data.date,
         console.log('all_data获取成功...')
       }).catch(error => {
-        if (error.response.status === 400)
-          console.log('出错了')
-      });
+        if (error.response.status === 400) { console.log('出错了') }
+      })
     },
     switchFile(index) {
-      this.fileIndex = index;
-      console.log('点击了集群 ' + this.fileIndex + ' 的文件');
+      this.fileIndex = index
+      console.log('点击了集群 ' + this.fileIndex + ' 的文件')
       axios.post(`http://localhost:5000/predict`, { sheet_num: index }).then(res => {
+        //向后端发送需要的文件索引-3.1
         console.log('正在获取目标数据...'),
-        lineChartData.allData.expectedData=res.data.all_data.predict,
-        lineChartData.allData.actualData=res.data.all_data.actual,
-        lineChartData.allData.expectedDataXAxis=res.data.all_data.date,
+        lineChartData.allData.expectedData = res.data.all_data.predict,
+        lineChartData.allData.actualData = res.data.all_data.actual,
+        lineChartData.allData.expectedDataXAxis = res.data.all_data.date,
         console.log('all_data获取成功...'),
         console.log('anomaly获取成功...')
       }).catch(error => {
-        if (error.response.status === 400)
-          console.log('出错了')
-      });
+        if (error.response.status === 400) { console.log('出错了') }
+      })
     }
   }
 }

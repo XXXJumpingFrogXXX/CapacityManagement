@@ -1,8 +1,11 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureDay')"
-        :class="{ active: activeButton === 'futureDay' }">
+      <div
+        class="card-panel"
+        :class="{ active: activeButton === 'futureDay' }"
+        @click="handleSetLineChartData('futureDay')"
+      >
         <div class="card-panel-icon-wrapper icon-day">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -14,8 +17,11 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureWeek')"
-        :class="{ active: activeButton === 'futureWeek' }">
+      <div
+        class="card-panel"
+        :class="{ active: activeButton === 'futureWeek' }"
+        @click="handleSetLineChartData('futureWeek')"
+      >
         <div class="card-panel-icon-wrapper icon-week">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -27,8 +33,11 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureHalfMonth')"
-        :class="{ active: activeButton === 'futureHalfMonth' }">
+      <div
+        class="card-panel"
+        :class="{ active: activeButton === 'futureHalfMonth' }"
+        @click="handleSetLineChartData('futureHalfMonth')"
+      >
         <div class="card-panel-icon-wrapper icon-month">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -40,8 +49,11 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('futureMonth')"
-        :class="{ active: activeButton === 'futureMonth' }">
+      <div
+        class="card-panel"
+        :class="{ active: activeButton === 'futureMonth' }"
+        @click="handleSetLineChartData('futureMonth')"
+      >
         <div class="card-panel-icon-wrapper icon-year">
           <svg-icon icon-class="star" class-name="card-panel-icon" />
         </div>
@@ -62,13 +74,13 @@ export default {
   },
   data() {
     return {
-      activeButton: 'futureDay',
+      activeButton: 'futureDay'
       // other data
     }
   },
   methods: {
     handleSetLineChartData(type) {
-      this.activeButton = type;
+      this.activeButton = type
       this.$emit('handleSetLineChartData', type)
     }
   }

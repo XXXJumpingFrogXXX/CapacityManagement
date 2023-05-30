@@ -14,10 +14,8 @@ import pandas as pd
 #     预测步长
 #     具体数据
 
-# configuration
 DEBUG = True
-
-# instantiate the app and enable CORS
+# 实例化app并使用cors
 app = Flask(__name__)
 app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -32,7 +30,7 @@ sheets = ["test-aiops-hbase-203", "test-bpfp-bs-engine2-ft", "test-rr_offline_qf
 sheet_num = 0
 sheet_time = "futureWeek"
 sheet_periods = {"futureDay": 1, "futureWeek": 7, "futureMonth": 30,
-                 "futureHalfMonths": 15}
+                 "futureHalfMonth": 15}
 
 
 # excel文件路径
@@ -110,7 +108,7 @@ def fetchByPeriod():
     return dic
 
 
-# 3.2-文件索引
+# 3.2-切换文件索引
 @app.route('/data', methods=['GET', 'POST'])
 def data():
     response = {}
@@ -126,7 +124,7 @@ def data():
     return jsonify(response)
 
 
-# 3.2-时间步长
+# 3.2-切换预测时间步长
 @app.route("/period", methods=["POST", "GET"])
 def period():
     response = {}
@@ -140,7 +138,7 @@ def period():
     return jsonify(response)
 
 
-# 3.1-文件索引
+# 3.1-切换文件索引
 @app.route("/predict", methods=["POST", "GET"])
 def predict():
     response = {}
@@ -156,7 +154,7 @@ def predict():
     return jsonify(response)
 
 
-# 3.1-时间步长
+# 3.1-切换预测时间步长
 @app.route("/sheet_period", methods=["POST", "GET"])
 def sheet_period():
     response = {}

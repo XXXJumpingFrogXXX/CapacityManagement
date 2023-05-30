@@ -1,6 +1,5 @@
 <template>
-  <div :class="className" :style="{ height: height, width: width }">
-  </div>
+  <div :class="className" :style="{ height: height, width: width }" />
 </template>
 
 <script>
@@ -69,7 +68,7 @@ export default {
           start: 0,
           end: 100
         }
-      });
+      })
     },
     setOptions({ expectedData, expectedUpperData, expectedLowerData, actualData, expectedDataXAxis, actualStatus } = {}) {
       this.chart.setOption({
@@ -130,8 +129,7 @@ export default {
             start: 0,
             end: 100,
             filterMode: 'empty'
-          }]
-        ,
+          }],
         series: [{
           name: 'expected',
           itemStyle: {
@@ -160,22 +158,20 @@ export default {
           symbolSize: 2,
           itemStyle: {
             normal: {
-              color: function (params) {
+              color: function(params) {
                 if (actualData != null) {
                   if (actualStatus[params.dataIndex] === 'too high') {
                     // console.log('red');
-                    return 'red';
+                    return 'red'
                   } else if (actualStatus[params.dataIndex] === 'too low') {
-                    return 'red';
+                    return 'red'
                   } else {
-                    return '#B8DEFF';
+                    return '#B8DEFF'
                   }
-
                 } else {
-                  return '#B8DEFF';
+                  return '#B8DEFF'
                 }
-
-              },
+              }
             }
           },
           emphasis: {
@@ -184,7 +180,7 @@ export default {
             // 设置三角形标记的大小
             symbolSize: 6
           },
-          symbol:'triangle',
+          symbol: 'triangle',
 
           data: actualData,
           animationDuration: 2800,

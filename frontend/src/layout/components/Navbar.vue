@@ -5,9 +5,9 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-        </div>
+      <div class="avatar-wrapper">
+        <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+      </div>
     </div>
   </div>
 </template>

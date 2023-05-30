@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <img src="../../assets/nankai_images/logo.png" style="display: flex; justify-content: center; align-items: center;"/>
+        <img src="../../assets/nankai_images/logo.png" style="display: flex; justify-content: center; align-items: center;">
         <h3 class="title"> 登录界面</h3>
       </div>
 
